@@ -13,4 +13,4 @@ With this script, you can enhance the player's inventory by adding backpack item
 - Copy the script into a folder (to choose) from the 'resources' folder.
 - Add 'ensure xakra_backpacks' in the 'Resources.cfg' document
 
-Video: 
+Video: https://youtu.be/97i5WC7PAKY
