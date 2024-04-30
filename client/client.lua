@@ -14,6 +14,9 @@ AddEventHandler('xakra_backpacks:CreateBackpack', function(data)
     local BoneIndex = GetEntityBoneIndexByName(PlayerPedId(), 'CP_Back')
     AttachEntityToEntity(Backpack, PlayerPedId(), BoneIndex, data.Position, data.Rotation, true, true, false, true, 1, true)
 
+    data.NetworkId = NetworkGetNetworkIdFromEntity(Backpack)
+    LocalPlayer.state:set('Backpack', data, true)
+
     while LocalPlayer.state.Backpack do
         if not DoesEntityExist(Backpack) or not IsEntityAttached(Backpack) then
 

@@ -17,8 +17,6 @@ AddEventHandler('vorp_inventory:Server:OnItemCreated', function(data, source)
         local Character = VORPcore.getUser(source).getUsedCharacter
         Character.updateInvCapacity(Backpack.Weight)
     
-        Player(source).state:set('Backpack', Backpack, true)
-    
         exports.vorp_inventory:closeInventory(source)
 
         TriggerClientEvent('xakra_backpacks:CreateBackpack', source, Backpack)
@@ -60,8 +58,6 @@ AddEventHandler('xakra_backpacks:Connected', function()
         local Character = VORPcore.getUser(_source).getUsedCharacter
         Character.updateInvCapacity(Backpack.Weight)
 
-        Player(_source).state:set('Backpack', Backpack, true)
-
         exports.vorp_inventory:closeInventory(_source)
 
         TriggerClientEvent('xakra_backpacks:CreateBackpack', _source, Backpack)
@@ -74,6 +70,12 @@ AddEventHandler('playerDropped', function(reason)
     if Player(_source).state.Backpack then
         local Character = VORPcore.getUser(_source).getUsedCharacter
         Character.updateInvCapacity(- Player(_source).state.Backpack.Weight)
+
+        local entity = NetworkGetEntityFromNetworkId(Player(_source).state.Backpack.NetworkId)
+
+        if DoesEntityExist(entity) then
+            DeleteEntity(entity)
+        end
     end
 end)
 
