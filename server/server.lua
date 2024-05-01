@@ -14,33 +14,15 @@ AddEventHandler('vorp_inventory:Server:OnItemCreated', function(data, source)
     local Backpack = GetBackpack(data.name)
 
     if Backpack and not Player(source).state.Backpack then
-        local Character = VORPcore.getUser(source).getUsedCharacter
-        Character.updateInvCapacity(Backpack.Weight)
-    
-        exports.vorp_inventory:closeInventory(source)
-
-        TriggerClientEvent('xakra_backpacks:CreateBackpack', source, Backpack)
-    end
-end)
-
-AddEventHandler('vorp_inventory:Server:OnItemRemoved', function(data, source)
-    local Backpack = GetBackpack(data.name)
-
-    if Backpack and Player(source).state.Backpack then
-        local Character = VORPcore.getUser(source).getUsedCharacter
-        Character.updateInvCapacity(- Backpack.Weight)
-
-        Player(source).state:set('Backpack', nil, true)
-
-        exports.vorp_inventory:closeInventory(source)
-
-        TriggerClientEvent('xakra_backpacks:DeleteBackpack', source)
+        CreateBackpack(source, Backpack)
     end
 end)
 
 RegisterServerEvent('xakra_backpacks:Connected')
 AddEventHandler('xakra_backpacks:Connected', function()
 	local _source = source
+
+    DeleteBackpack(_source)
 
     local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(_source)
 
@@ -55,29 +37,49 @@ AddEventHandler('xakra_backpacks:Connected', function()
     end
 
     if Backpack and not Player(_source).state.Backpack then
-        local Character = VORPcore.getUser(_source).getUsedCharacter
+        CreateBackpack(_source, Backpack)
+    end
+end)
+
+function CreateBackpack(source, Backpack)
+    if not Player(source).state.Backpack then
+        local Character = VORPcore.getUser(source).getUsedCharacter
         Character.updateInvCapacity(Backpack.Weight)
 
-        exports.vorp_inventory:closeInventory(_source)
+        exports.vorp_inventory:closeInventory(source)
 
-        TriggerClientEvent('xakra_backpacks:CreateBackpack', _source, Backpack)
+        TriggerClientEvent('xakra_backpacks:CreateBackpack', source, Backpack)
+    end
+end
+
+AddEventHandler('vorp_inventory:Server:OnItemRemoved', function(data, source)
+    local Backpack = GetBackpack(data.name)
+
+    if Backpack and Player(source).state.Backpack then
+        DeleteBackpack(source)
     end
 end)
 
 AddEventHandler('playerDropped', function(reason)
     local _source = source
 
-    if Player(_source).state.Backpack then
-        local Character = VORPcore.getUser(_source).getUsedCharacter
-        Character.updateInvCapacity(- Player(_source).state.Backpack.Weight)
+    DeleteBackpack(_source)
+end)
 
-        local entity = NetworkGetEntityFromNetworkId(Player(_source).state.Backpack.NetworkId)
+function DeleteBackpack(source)
+    if Player(source).state.Backpack then
+        local Character = VORPcore.getUser(source).getUsedCharacter
+        Character.updateInvCapacity(- Player(source).state.Backpack.Weight)
+
+        local entity = NetworkGetEntityFromNetworkId(Player(source).state.Backpack.NetworkId)
 
         if DoesEntityExist(entity) then
             DeleteEntity(entity)
         end
+
+        Player(source).state:set('Backpack', nil, true)
     end
-end)
+end
 
 AddEventHandler('onResourceStop', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then

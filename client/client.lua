@@ -19,12 +19,7 @@ AddEventHandler('xakra_backpacks:CreateBackpack', function(data)
 
     while LocalPlayer.state.Backpack do
         if not DoesEntityExist(Backpack) or not IsEntityAttached(Backpack) then
-
-            if DoesEntityExist(Backpack) then
-                DeleteObject(Backpack)
-            end
-
-            TriggerEvent('xakra_backpacks:CreateBackpack', data)
+            TriggerServerEvent('xakra_backpacks:Connected')
             break
         end
 
