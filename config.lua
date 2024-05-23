@@ -23,3 +23,6 @@ Config.Backpacks = {
         Rotation = vector3(20.0, 0.0, -90.0),
     },
 }
+
+-- Set initial weight when a player connects to the server. It will avoid weight gain bugs but by default.
+Config.initInvCapacity = 35.0 -- number or false

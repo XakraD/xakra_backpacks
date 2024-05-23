@@ -22,6 +22,15 @@ RegisterServerEvent('xakra_backpacks:Connected')
 AddEventHandler('xakra_backpacks:Connected', function()
 	local _source = source
 
+    if Config.initInvCapacity and type(Config.initInvCapacity) == 'number' then
+        local Character = VORPcore.getUser(_source).getUsedCharacter
+        local slots = Config.initInvCapacity - Character.invCapacity
+
+        if slots < 0 then
+            Character.updateInvCapacity(slots)
+        end
+    end
+
     DeleteBackpack(_source)
 
     local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(_source)
@@ -45,8 +54,6 @@ function CreateBackpack(source, Backpack)
     if not Player(source).state.Backpack then
         local Character = VORPcore.getUser(source).getUsedCharacter
         Character.updateInvCapacity(Backpack.Weight)
-
-        exports.vorp_inventory:closeInventory(source)
 
         TriggerClientEvent('xakra_backpacks:CreateBackpack', source, Backpack)
     end
