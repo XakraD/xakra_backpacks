@@ -3,7 +3,7 @@ CreateThread(function()
 		repeat Wait(0) until LocalPlayer.state.IsInSession and LocalPlayer.state.Character and not IsLoadingScreenVisible() and not IsScreenFadedOut()
 	end
 
-    TriggerServerEvent('xakra_backpacks:Connected')
+    TriggerServerEvent('xakra_backpacks:Connected', true)
 end)
 
 local Backpack

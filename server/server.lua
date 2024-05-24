@@ -19,10 +19,10 @@ AddEventHandler('vorp_inventory:Server:OnItemCreated', function(data, source)
 end)
 
 RegisterServerEvent('xakra_backpacks:Connected')
-AddEventHandler('xakra_backpacks:Connected', function()
+AddEventHandler('xakra_backpacks:Connected', function(Connected)
 	local _source = source
 
-    if Config.initInvCapacity and type(Config.initInvCapacity) == 'number' then
+    if Connected and Config.initInvCapacity and type(Config.initInvCapacity) == 'number' then
         local Character = VORPcore.getUser(_source).getUsedCharacter
         local slots = Config.initInvCapacity - Character.invCapacity
 
