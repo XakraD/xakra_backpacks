@@ -22,6 +22,14 @@ Config.Backpacks = {
         Position = vector3(-0.2, -0.1, 0.06),
         Rotation = vector3(20.0, 0.0, -90.0),
     },
+    {
+        Item = 'backpack5',
+        Weight = 20,
+        Model = 'p_bag01x',
+        Position = vector3(0.45, 0.0, 0.0),
+        Rotation = vector3(0.0, -90.0, -65.0),
+        Bone = 'skel_l_hand',
+    },
 }
 
 -- Set initial weight when a player connects to the server. It will avoid weight gain bugs but by default.

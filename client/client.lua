@@ -11,7 +11,7 @@ local Backpack
 RegisterNetEvent('xakra_backpacks:CreateBackpack')
 AddEventHandler('xakra_backpacks:CreateBackpack', function(data)
     Backpack = CreateObject(data.Model, GetEntityCoords(PlayerPedId()), true, true, false)
-    local BoneIndex = GetEntityBoneIndexByName(PlayerPedId(), 'CP_Back')
+    local BoneIndex = GetEntityBoneIndexByName(PlayerPedId(), data.Bone or 'CP_Back')
     AttachEntityToEntity(Backpack, PlayerPedId(), BoneIndex, data.Position, data.Rotation, true, true, false, true, 1, true)
 
     data.NetworkId = NetworkGetNetworkIdFromEntity(Backpack)
