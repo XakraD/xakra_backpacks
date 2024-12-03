@@ -32,6 +32,8 @@ Config.Backpacks = {
     },
 }
 
+-- You can use any of these images for the items: https://github.com/TankieTwitch/FREE-RedM-Image-Library/tree/main/images/%5Bbackpacks-storage%5D
+
 -- Set initial weight when a player connects to the server. It will avoid weight gain bugs but by default.
 Config.initInvCapacity = 35.0 -- number or false
 
