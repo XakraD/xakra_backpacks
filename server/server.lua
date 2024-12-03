@@ -102,3 +102,39 @@ AddEventHandler('onResourceStop', function(resourceName)
         end
     end
 end)
+
+if Config.Overweight then
+    AddEventHandler('vorp_inventory:Server:OnItemCreated', function(data, source)
+        CheckOverweight(source)
+    end)
+
+    AddEventHandler('vorp_inventory:Server:OnItemRemoved', function(data, source)
+        CheckOverweight(source)
+    end)
+end
+
+RegisterServerEvent('xakra_backpacks:CheckOverweight')
+AddEventHandler('xakra_backpacks:CheckOverweight', function()
+    local _source = source
+    CheckOverweight(_source)
+end)
+
+function CheckOverweight(source)
+    local Weight = 0
+
+    local InventoryItems = exports.vorp_inventory:getUserInventoryItems(source)
+
+    for i, v in pairs(InventoryItems) do
+        Weight = Weight + (v.weight * v.count)
+    end
+
+    local InventoryWeapons = exports.vorp_inventory:getUserInventoryWeapons(source)
+
+    for i, v in pairs(InventoryWeapons) do
+        Weight = Weight + v.weight
+    end
+
+    local Character = VORPcore.getUser(source).getUsedCharacter
+
+    TriggerClientEvent('xakra_backpacks:Overweight', source, Weight, Character.invCapacity)
+end

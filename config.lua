@@ -34,3 +34,6 @@ Config.Backpacks = {
 
 -- Set initial weight when a player connects to the server. It will avoid weight gain bugs but by default.
 Config.initInvCapacity = 35.0 -- number or false
+
+-- Slow down the character if it exceeds the weight of the inventory
+Config.Overweight = true    -- true or false

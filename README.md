@@ -8,6 +8,8 @@ With this script, you can enhance the player's inventory by adding backpack item
 
 # You can configure:
 - Backpack list (item name, weight gain amount, position and rotation)
+- Default inventory capacity (amount/disable)
+- Slow down the character when having too much weight in the inventory (enable/disable)
 
 ## Instructions to incorporate script
 - Copy the script into a folder (to choose) from the 'resources' folder.

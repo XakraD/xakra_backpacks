@@ -35,6 +35,29 @@ AddEventHandler('xakra_backpacks:DeleteBackpack', function(model)
     end
 end)
 
+if Config.Overweight then
+    AddEventHandler("vorp_inventory:Client:OnInvStateChange",function(boolean)
+        TriggerServerEvent('xakra_backpacks:CheckOverweight')
+    end)
+end
+
+local Overweight = false
+
+RegisterNetEvent('xakra_backpacks:Overweight')
+AddEventHandler('xakra_backpacks:Overweight', function(Weight, invCapacity)
+    if Overweight and Weight <= invCapacity then
+        Overweight = false
+
+    elseif not Overweight and Weight > invCapacity then
+        Overweight = true
+
+        while Overweight do
+            SetPedMaxMoveBlendRatio(PlayerPedId(), 0.15)
+            Wait(0)
+        end
+    end
+end)
+
 AddEventHandler('onResourceStop', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
