@@ -48,6 +48,10 @@ AddEventHandler('xakra_backpacks:Connected', function(Connected)
     if Backpack and not Player(_source).state.Backpack then
         CreateBackpack(_source, Backpack)
     end
+
+    if Config.Overweight then
+        CheckOverweight(_source)
+    end
 end)
 
 function CreateBackpack(source, Backpack)

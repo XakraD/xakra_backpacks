@@ -37,7 +37,9 @@ end)
 
 if Config.Overweight then
     AddEventHandler("vorp_inventory:Client:OnInvStateChange",function(boolean)
-        TriggerServerEvent('xakra_backpacks:CheckOverweight')
+        if not boolean then
+            TriggerServerEvent('xakra_backpacks:CheckOverweight')
+        end
     end)
 end
 
@@ -52,6 +54,9 @@ AddEventHandler('xakra_backpacks:Overweight', function(Weight, invCapacity)
         Overweight = true
 
         while Overweight do
+            DisableControlAction(0, joaat('INPUT_ENTER'), true)
+            DisableControlAction(0, joaat('INPUT_SPRINT'), true)
+            DisableControlAction(0, joaat('INPUT_VEH_ACCELERATE'), true)
             SetPedMaxMoveBlendRatio(PlayerPedId(), 0.15)
             Wait(0)
         end
