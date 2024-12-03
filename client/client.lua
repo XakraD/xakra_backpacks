@@ -54,9 +54,10 @@ AddEventHandler('xakra_backpacks:Overweight', function(Weight, invCapacity)
         Overweight = true
 
         while Overweight do
-            DisableControlAction(0, joaat('INPUT_ENTER'), true)
+            -- DisableControlAction(0, joaat('INPUT_ENTER'), true)
             DisableControlAction(0, joaat('INPUT_SPRINT'), true)
             DisableControlAction(0, joaat('INPUT_VEH_ACCELERATE'), true)
+            DisableControlAction(0, joaat('INPUT_VEH_BOAT_ACCELERATE'), true)
             SetPedMaxMoveBlendRatio(PlayerPedId(), 0.15)
             Wait(0)
         end
