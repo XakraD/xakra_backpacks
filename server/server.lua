@@ -11,10 +11,13 @@ function GetBackpack(ItemName)
 end
 
 AddEventHandler('vorp_inventory:Server:OnItemCreated', function(data, source)
+    local _source = source
     local Backpack = GetBackpack(data.name)
 
-    if Backpack and not Player(source).state.Backpack then
-        CreateBackpack(source, Backpack)
+    if Backpack and not Player(_source).state.Backpack then
+        CreateBackpack(_source, Backpack)
+    elseif Backpack and Player(_source).state.Backpack then
+        RefreshBackpack(_source)
     end
 end)
 
@@ -34,14 +37,17 @@ AddEventHandler('xakra_backpacks:Connected', function(Connected)
     DeleteBackpack(_source)
 
     local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(_source)
-
     local Backpack
 
-    for k, v in pairs(UserInventoryItems) do
-        Backpack = GetBackpack(v.name)
+    for k, v in ipairs(UserInventoryItems) do
+        if v.count >= 1 then
+            local tempBackpack = GetBackpack(v.name)
 
-        if Backpack then
-            break
+            if tempBackpack then
+                if not Backpack or tempBackpack.Weight > Backpack.Weight then
+                    Backpack = tempBackpack
+                end
+            end
         end
     end
 
@@ -63,11 +69,45 @@ function CreateBackpack(source, Backpack)
     end
 end
 
+function RefreshBackpack(player)
+    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(player)
+    local Backpack = nil
+
+    for k, v in ipairs(UserInventoryItems) do
+        if v.count >= 1 then
+            local tempBackpack = GetBackpack(v.name)
+
+            if tempBackpack then
+                if not Backpack or tempBackpack.Weight > Backpack.Weight then
+                    Backpack = tempBackpack
+                end
+            end
+        end
+    end
+
+    if Player(player).state.Backpack then
+        DeleteBackpack(player)
+    end
+
+    if Backpack then
+        CreateBackpack(player, Backpack)
+    end
+
+    if Config.Overweight then
+        CheckOverweight(player)
+    end
+end
+
 AddEventHandler('vorp_inventory:Server:OnItemRemoved', function(data, source)
+    local _source = source
     local Backpack = GetBackpack(data.name)
 
-    if Backpack and Player(source).state.Backpack then
-        DeleteBackpack(source)
+    if Backpack and Player(_source).state.Backpack and Player(_source).state.Backpack.Item == data.name then
+		local backpackCount = exports.vorp_inventory:getItemCount(_source, nil, data.name)
+		if backpackCount == 0 then
+			DeleteBackpack(_source)
+            RefreshBackpack(_source)
+		end
     end
 end)
 
