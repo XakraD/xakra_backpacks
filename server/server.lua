@@ -86,7 +86,7 @@ function RefreshBackpack(source)
         end
     end
 
-    if not Player(source).state.Backpack or (Player(source).state.Backpack.Item ~= Backpack.Item) then
+    if Backpack and (not Player(source).state.Backpack or (Player(source).state.Backpack.Item ~= Backpack.Item)) then
         DeleteBackpack(source)
         CreateBackpack(source, Backpack)
     end
