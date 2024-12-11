@@ -23,6 +23,13 @@ Config.Backpacks = {
         Rotation = vector3(20.0, 0.0, -90.0),
     },
     {
+        Item = 'knapsack1',
+        Weight = 20,
+        Model = 's_knapsack01x',
+        Position = vector3(-0.13, 0.0, 0.01),
+        Rotation = vector3(0.0, -100.0, 0.0),
+    },
+    {
         Item = 'backpack5',
         Weight = 20,
         Model = 'p_bag01x',

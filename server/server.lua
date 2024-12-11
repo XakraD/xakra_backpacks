@@ -69,9 +69,10 @@ function CreateBackpack(source, Backpack)
     end
 end
 
-function RefreshBackpack(player)
-    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(player)
-    local Backpack = nil
+function RefreshBackpack(source)
+    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(source)
+
+    local Backpack = Player(source).state.Backpack
 
     for k, v in ipairs(UserInventoryItems) do
         if v.count >= 1 then
@@ -85,16 +86,13 @@ function RefreshBackpack(player)
         end
     end
 
-    if Player(player).state.Backpack then
-        DeleteBackpack(player)
-    end
-
-    if Backpack then
-        CreateBackpack(player, Backpack)
+    if not Player(source).state.Backpack or (Player(source).state.Backpack.Item ~= Backpack.Item) then
+        DeleteBackpack(source)
+        CreateBackpack(source, Backpack)
     end
 
     if Config.Overweight then
-        CheckOverweight(player)
+        CheckOverweight(source)
     end
 end
 
@@ -104,6 +102,7 @@ AddEventHandler('vorp_inventory:Server:OnItemRemoved', function(data, source)
 
     if Backpack and Player(_source).state.Backpack and Player(_source).state.Backpack.Item == data.name then
 		local backpackCount = exports.vorp_inventory:getItemCount(_source, nil, data.name)
+        
 		if backpackCount == 0 then
 			DeleteBackpack(_source)
             RefreshBackpack(_source)
