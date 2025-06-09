@@ -101,6 +101,8 @@ AddEventHandler('vorp_inventory:Server:OnItemRemoved', function(data, source)
     local Backpack = GetBackpack(data.name)
 
     if Backpack and Player(_source).state.Backpack and Player(_source).state.Backpack.Item == data.name then
+        Wait(100)
+
 		local backpackCount = exports.vorp_inventory:getItemCount(_source, nil, data.name)
         
 		if backpackCount == 0 then
