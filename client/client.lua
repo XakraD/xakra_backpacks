@@ -12,7 +12,6 @@ RegisterNetEvent('xakra_backpacks:CreateBackpack')
 AddEventHandler('xakra_backpacks:CreateBackpack', function(data)
     local coords = GetEntityCoords(PlayerPedId())
     Backpack = CreateObject(data.Model, coords.x, coords.y, coords.z - 5, true, true, false)
-    Wait(500)
 
     SetEntityCompletelyDisableCollision(Backpack, false, false)
     
