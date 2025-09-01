@@ -70,7 +70,7 @@ function CreateBackpack(source, Backpack)
 end
 
 function RefreshBackpack(source)
-    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(source)
+    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(source) or {}
 
     local Backpack = Player(source).state.Backpack
 
@@ -167,7 +167,7 @@ end)
 function CheckOverweight(source)
     local Weight = 0
 
-    local InventoryItems = exports.vorp_inventory:getUserInventoryItems(source)
+    local InventoryItems = exports.vorp_inventory:getUserInventoryItems(source) or {}
 
     for i, v in pairs(InventoryItems) do
         Weight = Weight + (v.weight * v.count)
