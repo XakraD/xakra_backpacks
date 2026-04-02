@@ -19,6 +19,7 @@ AddEventHandler('xakra_backpacks:CreateBackpack', function(data)
     AttachEntityToEntity(Backpack, PlayerPedId(), BoneIndex, data.Position, data.Rotation, true, true, false, true, 1, true)
 
     data.NetworkId = NetworkGetNetworkIdFromEntity(Backpack)
+    SetNetworkIdExistsOnAllMachines(data.NetworkId, true)
     LocalPlayer.state:set('Backpack', data, true)
 
     while LocalPlayer.state.Backpack do
