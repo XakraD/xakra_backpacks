@@ -2,7 +2,7 @@
 
 ## REQUIREMENTS
 - [vorp_core](https://github.com/VORPCORE/vorp-core-lua)
-- [vorp_inventory](https://github.com/VORPCORE/vorp_inventory-lua)
+- [vorp_inventory](https://github.com/VORPCORE/vorp_inventory-v2)
 
 ## DESCRIPTION
 With this script, you can enhance the player's inventory by adding backpack items. When the player possesses the item in their inventory, the backpack will spawns on their back, thereby increasing the maximum weight capacity of their inventory.

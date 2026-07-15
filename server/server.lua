@@ -36,7 +36,7 @@ AddEventHandler('xakra_backpacks:Connected', function(Connected)
 
     DeleteBackpack(_source)
 
-    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(_source)
+    local UserInventoryItems = exports.vorp_inventory:getUserInventoryItems(_source) or {}
     local Backpack
 
     for k, v in ipairs(UserInventoryItems) do
@@ -173,7 +173,7 @@ function CheckOverweight(source)
         Weight = Weight + (v.weight * v.count)
     end
 
-    local InventoryWeapons = exports.vorp_inventory:getUserInventoryWeapons(source)
+    local InventoryWeapons = exports.vorp_inventory:getUserInventoryWeapons(source) or {}
 
     for i, v in pairs(InventoryWeapons) do
         Weight = Weight + v.weight
